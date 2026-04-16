@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="guanjianhe">
+  <link rel="canonical" href="https://gjianhe.github.io/%E5%8D%95%E7%89%87%E6%9C%BA-SREC%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>单片机-SREC文件格式解析 - My Docs</title>
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u5355\u7247\u673a-SREC\u6587\u4ef6\u683c\u5f0f\u89e3\u6790";
+    var mkdocs_page_input_path = "\u5355\u7247\u673a-SREC\u6587\u4ef6\u683c\u5f0f\u89e3\u6790.md";
+    var mkdocs_page_url = "/%E5%8D%95%E7%89%87%E6%9C%BA-SREC%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> My Docs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Welcome to MkDocs</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="..#commands">Commands</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#project-layout">Project layout</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../Win%20%E5%86%85%E7%BD%91%E8%BD%AC%E5%8F%91/">Win 内网转发</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../git-%E6%9F%A5%E7%9C%8B%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95/">git-查看某个文件的修改记录</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../git-%E6%9F%A5%E7%9C%8B%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95/#commit">查看某个文件的commit记录</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../git-%E6%9F%A5%E7%9C%8B%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95/#diff">查看文件每次提交的diff</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../git-%E6%9F%A5%E7%9C%8B%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95/#_1">列出文件的所有改动历史</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../git-%E6%9F%A5%E7%9C%8B%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95/#_2">只查看某次提交的文件变化</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../linux-debian%E5%AE%89%E8%A3%85ifconfig/">linux-debian安装ifconfig</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../linux-%E4%B8%BA%20APT%20%E5%91%BD%E4%BB%A4%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/">linux-为 APT 命令设置代理</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../linux-%E4%B8%BA%20APT%20%E5%91%BD%E4%BB%A4%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/#_1">参考链接</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../linux-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">linux-常用命令</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../linux-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#_1">重启</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../linux-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#_2">关机</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../linux-%E6%9F%A5%E7%9C%8Bdebian%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC/">linux-查看debian系统版本</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../linux-%E8%AE%BE%E7%BD%AE%E5%88%AB%E5%90%8D/">linux-设置别名</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../samba-%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE/">samba-安装及配置</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../samba-%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE/#_1">安装软件</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../samba-%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE/#_2">配置</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../samba-%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE/#_3">检查配置</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../samba-%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE/#_4">注册用户</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../samba-%E8%A7%A3%E5%86%B3%20iOS%20%E4%B8%8A%E5%8F%AA%E8%AF%BB%E9%97%AE%E9%A2%98/">samba-解决 iOS 上只读问题</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../samba-%E8%A7%A3%E5%86%B3%20iOS%20%E4%B8%8A%E5%8F%AA%E8%AF%BB%E9%97%AE%E9%A2%98/#samba">修改 Samba 配置文件</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../samba-%E8%A7%A3%E5%86%B3%20iOS%20%E4%B8%8A%E5%8F%AA%E8%AF%BB%E9%97%AE%E9%A2%98/#samba_1">重启 Samba 服务</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ssh-%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">ssh-免密登录</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../ssh-%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/#1-ssh-key">1. 创建SSH Key</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../ssh-%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/#2">2. 上传公钥</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../ssh-%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/#3">3. 参考</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../vim-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">vim-基本使用教程</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../vim-%E6%9B%BF%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2/">vim-替换字符串</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../vim-%E6%B8%85%E7%A9%BA%E6%96%87%E4%BB%B6%E6%89%80%E6%9C%89%E5%86%85%E5%AE%B9/">vim-清空文件所有内容</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../vim-%E9%85%8D%E7%BD%AE/">vim-配置</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../windows-%E8%87%AA%E5%B8%A6%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E3%80%81%E8%BD%AC%E5%8F%91/">windows-自带端口映射、转发</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../windows-%E8%87%AA%E5%B8%A6%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E3%80%81%E8%BD%AC%E5%8F%91/#1">1.查看已添加端口映射</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../windows-%E8%87%AA%E5%B8%A6%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E3%80%81%E8%BD%AC%E5%8F%91/#2">2.添加端口映射转发</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../windows-%E8%87%AA%E5%B8%A6%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E3%80%81%E8%BD%AC%E5%8F%91/#3">3.删除端口映射转发</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../windows-%E8%87%AA%E5%B8%A6%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E3%80%81%E8%BD%AC%E5%8F%91/#4">4. 常用</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../%E5%8D%81%E8%BF%9B%E5%88%B6%E4%B8%8EBCD%E7%A0%81%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%AE%97%E6%B3%95/">十进制与BCD码转换的算法</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../%E5%8D%81%E8%BF%9B%E5%88%B6%E4%B8%8EBCD%E7%A0%81%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%AE%97%E6%B3%95/#bcd_1">BCD码</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../%E5%8D%81%E8%BF%9B%E5%88%B6%E4%B8%8EBCD%E7%A0%81%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%AE%97%E6%B3%95/#_1">算法原理</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../%E5%8D%81%E8%BF%9B%E5%88%B6%E4%B8%8EBCD%E7%A0%81%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%AE%97%E6%B3%95/#_2">代码</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">单片机-SREC文件格式解析</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_1">核心作用</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">文件结构</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-record-type-1">1. 记录类型 (Record Type - 1字节)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-byte-count-1">2. 字节计数 (Byte Count - 1字节)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-address-2-3-4">3. 地址 (Address - 2, 3, 或 4字节)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-data-0n">4. 数据 (Data - 0到n字节)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-checksum-1">5. 校验和 (Checksum - 1字节)</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../%E5%8D%95%E7%89%87%E6%9C%BA-__DSB%28%29%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%9C%E7%94%A8/">单片机-__DSB()指令的作用</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../%E5%8D%95%E7%89%87%E6%9C%BA-%E4%BB%8EBoot%E8%B7%B3%E8%BD%AC%E5%88%B0App/">单片机-从Boot跳转到App</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../%E5%8D%95%E7%89%87%E6%9C%BA-%E8%BE%B9%E6%B2%BF%E6%A3%80%E6%B5%8B/">单片机-边沿检测</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../%E5%8D%95%E7%89%87%E6%9C%BA-%E8%BE%B9%E6%B2%BF%E6%A3%80%E6%B5%8B/#_1">原理</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../%E6%9C%89%E5%8A%9F%E6%97%A0%E5%8A%9F%E5%92%8C%E8%A7%86%E5%9C%A8%E5%8A%9F%E7%8E%87%E5%85%B3%E7%B3%BB/">有功无功和视在功率关系</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../%E6%9C%89%E5%8A%9F%E6%97%A0%E5%8A%9F%E5%92%8C%E8%A7%86%E5%9C%A8%E5%8A%9F%E7%8E%87%E5%85%B3%E7%B3%BB/#active-powerp">有功功率（Active Power/P）：</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../%E6%9C%89%E5%8A%9F%E6%97%A0%E5%8A%9F%E5%92%8C%E8%A7%86%E5%9C%A8%E5%8A%9F%E7%8E%87%E5%85%B3%E7%B3%BB/#reactive-powerq">无功功率（Reactive Power/Q）：</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../%E6%9C%89%E5%8A%9F%E6%97%A0%E5%8A%9F%E5%92%8C%E8%A7%86%E5%9C%A8%E5%8A%9F%E7%8E%87%E5%85%B3%E7%B3%BB/#apparent-powers">视在功率（Apparent Power/S）：</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../%E6%A0%88%E9%A1%B6%E5%92%8C%E6%A0%88%E5%BA%95/">栈顶和栈底</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../%E6%B0%B4%E7%85%AE%E9%B8%A1%E8%9B%8B/">水煮鸡蛋</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../%E7%94%B5%E5%8A%9B%E4%B8%ADPn%E7%9A%84%E5%90%AB%E4%B9%89/">电力中Pn的含义</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/">计算机-补码、原码、反码</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/#1-sign-magnitude-representation">1. 原码（Sign-Magnitude Representation）</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/#_1">示例：</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/#2-ones-complement-representation">2. 反码（One's Complement Representation）</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/#_2">示例：</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/#3-twos-complement-representation">3. 补码（Two's Complement Representation）</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/#_3">补码转换方法：</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/#_4">示例：</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%BA%90%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/#_5">总结</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../%E9%80%9A%E8%BF%87bark%E6%8A%8Aip%E6%8E%A8%E9%80%81%E5%88%B0%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%84%9A%E6%9C%AC/">通过bark把ip推送到客户端脚本</a>
+    <ul>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">My Docs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>单片机-SREC文件格式解析</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="-srec">单片机-SREC文件格式解析</h1>
+<p>SREC 文件，也称为 ​<strong>​S-record​</strong>​ 或 ​<strong>​Motorola Hex​</strong>​ 文件，是一种由摩托罗拉公司创建的 ASCII 文本格式，用于将机器代码和数据以可打印的形式传输到编程器（烧录器）或微控制器等嵌入式系统中。它是 Intel Hex 格式的主要替代方案。</p>
+<h2 id="_1">核心作用</h2>
+<p>SREC 文件主要用于：</p>
+<ul>
+<li>​<strong>​固件传输​</strong>​：将编译后的程序代码从开发环境（如 IDE）传输到目标设备的闪存或 ROM 中。</li>
+<li>​<strong>​简单、可读​</strong>​：因为是纯文本格式，开发者可以轻松地查看和校验其内容，这在调试时非常有用。</li>
+<li>​<strong>​被广泛支持​</strong>​：大多数编译器（如 GCC）、链接器、调试器和编程器软件都支持生成或读取 SREC 格式。</li>
+</ul>
+<h2 id="_2">文件结构</h2>
+<p>一个 SREC 文件由一系列​<strong>​文本行（记录）​</strong>​ 组成。每行代表一条记录，以​<strong>​回车换行符​</strong>​（CR/LF 或仅 LF）结束。每条记录都包含以下五个部分：</p>
+<p><code>[记录类型][字节计数][地址][数据][校验和]</code></p>
+<h3 id="1-record-type-1">1. 记录类型 (Record Type - 1字节)</h3>
+<p>这是一个固定的字符（'S' 后跟一个数字），定义了记录的功能和其后地址字段的长度。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>地址字节数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0</td>
+<td>2</td>
+<td><strong>文件头记录​</strong>​。通常包含文件名或描述性信息。地址字段通常为 0x0000，数据字段包含 ASCII 文本。此记录是可选的。</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>2</td>
+<td><strong>数据记录​</strong>​。包含 16 位（2 字节）地址的数据。这是最常用的数据记录。</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>3</td>
+<td>​<strong>​数据记录​</strong>​。包含 24 位（3 字节）地址的数据。</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>4</td>
+<td><strong>数据记录​</strong>​。包含 32 位（4 字节）地址的数据。</td>
+</tr>
+<tr>
+<td>S5</td>
+<td>2</td>
+<td><strong>计数记录​</strong>​。可选记录，包含之前 S1/S2/S3 记录的数量（仅计数，不包括 S0/S5/S7/S8/S9）。地址字段存储这个计数。</td>
+</tr>
+<tr>
+<td>S7</td>
+<td>4</td>
+<td><strong>终止记录​</strong>​。表示一个 32 位地址程序的结束。地址字段包含程序的入口地址（起始地址）。</td>
+</tr>
+<tr>
+<td>S8</td>
+<td>3</td>
+<td><strong>终止记录​</strong>​。表示一个 24 位地址程序的结束。地址字段包含程序的入口地址。</td>
+</tr>
+<tr>
+<td>S9</td>
+<td>2</td>
+<td><strong>终止记录​</strong>​。表示一个 16 位地址程序的结束。地址字段包含程序的入口地址。这是最常见的终止记录。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-byte-count-1">2. 字节计数 (Byte Count - 1字节)</h3>
+<p>一个十六进制值，表示该记录中​<strong>​后续所有字节的总数​</strong>​（包括地址字节、数据字节和校验和字节）。</p>
+<p>例如，如果一条 S1 记录有 2 字节地址、16 字节数据，则字节计数为 <code>2 + 16 + 1 = 19</code>(0x13)。</p>
+<h3 id="3-address-2-3-4">3. 地址 (Address - 2, 3, 或 4字节)</h3>
+<p>数据的起始内存地址。长度由记录类型决定（S1=2字节，S2=3字节，S3=4字节）。</p>
+<h3 id="4-data-0n">4. 数据 (Data - 0到n字节)</h3>
+<p>实际的程序代码或数据，以十六进制ASCII表示。每条记录的数据字节数通常是可变的。</p>
+<h3 id="5-checksum-1">5. 校验和 (Checksum - 1字节)</h3>
+<p>用于验证记录传输过程中是否出错的单字节校验值。</p>
+<p><strong>校验和计算方法​</strong>​：</p>
+<ol>
+<li>将​<strong>​字节计数​</strong>​、​<strong>​地址​</strong>​的所有字节和​<strong>​数据​</strong>​的所有字节相加（作为数值，而不是ASCII字符）。</li>
+<li>只保留相加结果的​<strong>​最低 8 位​</strong>​（即对 0xFF 取模）。</li>
+<li>计算该值的​<strong>​二进制补码​</strong>​（即用 0xFF 减去上面的结果）。</li>
+<li>最终得到的这个 8 位值就是校验和。</li>
+</ol>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../%E5%8D%95%E7%89%87%E6%9C%BA-__DSB%28%29%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%9C%E7%94%A8/" class="btn btn-neutral float-right" title="单片机-__DSB()指令的作用">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../%E5%8D%81%E8%BF%9B%E5%88%B6%E4%B8%8EBCD%E7%A0%81%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%AE%97%E6%B3%95/" class="btn btn-neutral" title="十进制与BCD码转换的算法"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../%E5%8D%81%E8%BF%9B%E5%88%B6%E4%B8%8EBCD%E7%A0%81%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%AE%97%E6%B3%95/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../%E5%8D%95%E7%89%87%E6%9C%BA-__DSB%28%29%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%9C%E7%94%A8/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
