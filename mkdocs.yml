@@ -1,0 +1,21 @@
+site_name: My Docs
+site_url: https://gjianhe.github.io
+site_author: guanjianhe
+
+theme:
+  name: readthedocs
+  locale: zh_CN
+  titles_only: false
+  collapse_navigation: false
+  sticky_navigation: true
+
+markdown_extensions:
+  - fenced_code
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.caret
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
